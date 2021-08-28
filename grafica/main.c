@@ -7,11 +7,11 @@ int main(int argc, char **argv)
     int i;
     int j;
 
-   // if (argc != 2)
-   //     ft_error("error: enter argument");
-   printf("%s", argv[1]);
+   if (argc != 2)
+       ft_error("error: enter argument");
+   //printf("%s\n", argv[1]);
     matrix_map = (fdf*)malloc(sizeof(fdf));
-    printf("%s", argv[1]);
+    //printf("%s\n", argv[1]);
     map_read(argv[1], matrix_map);
     i = 0;
     while (i < matrix_map->h)
@@ -19,10 +19,11 @@ int main(int argc, char **argv)
         j = 0;
         while (j < matrix_map->w)
         {
-            printf("%d", matrix_map->d[i][j]);
+            printf("%3d", matrix_map->d[i][j]);
             j++;
         }
         i++; 
+        printf("\n");
     }
     return (0);
 }

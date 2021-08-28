@@ -7,7 +7,7 @@ int get_heigth(char *file)
     int height;
 
     fd = open(file, O_RDONLY, 0);
-    if(fd < 0)
+    if(fd <= 0)
         ft_error("not file");
     height = 0;
     while (get_next_line(fd, &line))
@@ -26,7 +26,7 @@ int get_width(char *file)
     int width;
 
     fd = open(file, O_RDONLY, 0);
-    if(fd < 0)
+    if(fd <= 0)
         ft_error("not file");
     get_next_line(fd, &line);
     width = ft_words_count(line, ' ');
@@ -50,11 +50,9 @@ void get_filling(int *line_z, char *line)
         j++;
     }
     free(num);   
-
 }
 
-
-void map_read(char *file, fdf *matrix_map)
+int *map_read(char *file, fdf *matrix_map)
 {
     int i;
     int fd;
@@ -67,13 +65,16 @@ void map_read(char *file, fdf *matrix_map)
     while (i <= matrix_map->h)
         matrix_map->d[i++] = (int *)malloc(sizeof(int*) * (matrix_map->w +1));
     fd = open(file, O_RDONLY, 0);
-    if(fd < 0)
+    if(fd <= 0)
         ft_error("not file");
+    i = 0;
     while (get_next_line(fd, &line))
     {
        get_filling(matrix_map->d[i], line);
+       free(line);
        i++;
     }
     close (fd);
     matrix_map->d[i] = NULL;
+    return (0);
 }

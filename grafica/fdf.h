@@ -6,19 +6,19 @@
 #include <stdio.h> // удалить, заменить на ft_printf
 #include "libft2/libft.h"
 
-typedef struct fdf
+typedef struct
 {
     void *mlx_ptr;
     void *win_ptr;
     int h;
     int w;
     int **d;
-    float x;
-    float y;
-    float z;
-
+    // float x;
+    // float y;
+    // float z;
+ 
 }               fdf;
 
-void map_read(char *file, fdf *matrix_map);
+int *map_read(char *file, fdf *matrix_map);
 
 #endif

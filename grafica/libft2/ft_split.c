@@ -12,93 +12,79 @@
 
 #include "libft.h"
 
-static char	**ft_free(char **mass)
+static int		words(char const *str, char c)
 {
-	unsigned int	i;
+	int i;
+	int words;
 
+	words = 0;
 	i = 0;
-	while (mass[i])
+	while (str[i])
 	{
-		free(mass[i]);
-		i++;
+		while (str[i] == c && str[i] != '\0')
+			i++;
+		if (str[i])
+			words++;
+		while (str[i] != c && str[i] != '\0')
+			i++;
 	}
-	free(mass);
-	return (NULL);
+	return (words);
 }
 
-static size_t	ft_quantity_src(char const *s, char c)
+static char		**memory_giver(char const *str, char c)
 {
-	size_t	i;
-	size_t	n_src;
+	char	**res;
+	int		letters;
+	int		i;
+	int		j;
 
-	if (!(*s))
-		return (0);
-	i = 0;
-	n_src = 0;
-	while (s[i] && s[i] == c)
-		i++;
-	while (s[i])
-	{
-		if (s[i] == c)
-		{
-			n_src++;
-			while (s[i] == c)
-				i++;
-			continue ;
-		}
-		i++;
-	}
-	if (s[i - 1] != c)
-		n_src++;
-	return (n_src);
-}
-
-static int	ft_len_str(char **str, unsigned int *len_s, char c)
-{
-	unsigned int	i;
-	int				j;
-
-	*str += *len_s;
-	*len_s = 0;
-	i = 0;
-	j = 0;
-	while (*str[i] && *str[i] == c)
-	{
-		(*str)++;
-		j++;
-	}
-	while ((*str)[i] && (*str)[i] != c)
-	{
-		(*len_s)++;
-		i++;
-	}
-	return (j);
-}
-
-char	**ft_split(char const *s, char c)
-{
-	char			**mass;
-	char			*str;
-	unsigned int	len_s;
-	size_t			len;
-	size_t			i;
-
-	len = ft_quantity_src(s, c);
-	mass = (char **)malloc(sizeof(char *) * (len + 1));
-	if (!s || !(mass))
+	if ((res = (char **)malloc(sizeof(char*) * (words(str, c) + 1))) == NULL)
 		return (NULL);
 	i = 0;
-	str = (char *)s;
-	len_s = 0;
-	while (i < len)
+	j = 0;
+	while (str[i])
 	{
-		ft_len_str(&str, &len_s, c);
-		mass[i] = (char *)malloc(sizeof(char) * (len_s + 1));
-		if (!(mass[i]))
-			return (ft_free(mass));
-		ft_strlcpy(mass[i], str, len_s + 1);
-		i++;
+		letters = 0;
+		while (str[i] == c && str[i])
+			i++;
+		while (str[i] != c && str[i] != '\0')
+		{
+			letters++;
+			i++;
+		}
+		if (letters > 0)
+			if ((res[j++] = (char *)malloc(sizeof(char) * letters + 1)) == NULL)
+				return (NULL);
 	}
-	mass[i] = NULL;
-	return (mass);
+	res[j] = 0;
+	return (res);
+}
+
+char			**ft_split(char const *s, char c)
+{
+	char	**res;
+	int		i;
+	int		j;
+	int		str_number;
+	int		size;
+
+	if (s == NULL)
+		return (NULL);
+	size = words(s, c);
+	res = memory_giver(s, c);
+	if (res == NULL)
+		return (NULL);
+	i = 0;
+	str_number = 0;
+	while (str_number < size)
+	{
+		while (s[i] == c && s[i])
+			i++;
+		j = 0;
+		while (s[i] != c && s[i])
+			res[str_number][j++] = s[i++];
+		res[str_number][j] = '\0';
+		str_number++;
+	}
+	return (res);
 }

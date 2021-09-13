@@ -19,6 +19,9 @@ typedef struct
     int color;
     int offset_x;
     int offset_y;
+    int offset_z;
+    float offset_angle_sin;
+    float offset_angle_cos;
     int realloc_size;
 }               fdf;
 
@@ -27,7 +30,7 @@ void print_map (fdf *matrix_map);
 void point_on_the_map(float x, float x1, float y, float y1, fdf *matrix_map);
 int max (int a, int b);
 float mod (float i);
-void get_3d(float *x, float *y, int z);
+void get_3d(float *x, float *y, int z, fdf *matrix_map);
 int get_event (int key, fdf *matrix_map);
 
 #endif

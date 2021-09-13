@@ -34,10 +34,10 @@ int get_color(int z, int z1, fdf *matrix_map)
         return (0xffffff);
 }
 
-void get_3d(float *x, float *y, int z)
+void get_3d(float *x, float *y, int z, fdf *matrix_map)
 {
-    *x = (*x - *y) * 0.5;//cos(0.5);// задать переменную на врашение
-    *y = (*x + *y) * 0.5 - z;//sin(0.5) - z;
+    *x = (*x - *y) * matrix_map->offset_angle_cos;//cos(0.5);// задать переменную на врашение
+    *y = (*x + *y) * matrix_map->offset_angle_sin - z;//sin(0.5) - z;
 }
 
 void point_on_the_map(float x, float y, float x1, float y1, fdf *matrix_map)
@@ -50,11 +50,11 @@ void point_on_the_map(float x, float y, float x1, float y1, fdf *matrix_map)
     int z;
     int z1;
 
-    z = matrix_map->d[(int)y][(int)x];
-    z1 = matrix_map->d[(int)y1][(int)x1];
+    z = matrix_map->d[(int)y][(int)x] * matrix_map->offset_z;
+    z1 = matrix_map->d[(int)y1][(int)x1]* matrix_map->offset_z;
     get_zoom(&x, &x1, &y, &y1, matrix_map);
-    get_3d(&x, &y, z * 5);
-    get_3d(&x1, &y1, z1 * 5);
+    get_3d(&x, &y, z, matrix_map);
+    get_3d(&x1, &y1, z1, matrix_map);
     matrix_map->color = get_color(z, z1, matrix_map);
     x += matrix_map->offset_x + 450;
     y += matrix_map->offset_y + 350;

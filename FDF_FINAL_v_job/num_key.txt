@@ -1,0 +1,25 @@
+if (key == 126) // стрелка вверх
+		matrix_map->offset_y -= 10;
+	if (key == 125) // стрелка вниз
+		matrix_map->offset_y += 10;
+	if (key == 123) // стрелка вправо
+		matrix_map->offset_x -= 10;
+	if (key == 124) // стрелка влево
+		matrix_map->offset_x += 10;
+	if (key == 78) // min zoom -
+		matrix_map->zoom -= 2;
+	if (key == 69) // max zoom +
+		matrix_map->zoom += 2;
+	if (key == 88) // вращение по оси 6
+		matrix_map->offset_angle_sin -= 0.1;
+	if (key == 86) // вращение по оси 4
+		matrix_map->offset_angle_sin += 0.1;
+	if (key == 84) // вращение по оси 2
+		matrix_map->offset_angle_cos -= 0.1;
+	if (key == 91) // вращение по оси 8
+		matrix_map->offset_angle_cos += 0.1;
+	if (key == 82) //0 min z
+		matrix_map->offset_z -= 2;
+	if (key == 87) // 5 max z
+		matrix_map->offset_z += 2;
+53 esc - exit
